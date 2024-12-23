@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('view')->nullable();
             $table->longText('description');
             $table->longText('content');
-            $table->tinyInteger('status')->comment('1: active | 2: inactive');
+            $table->tinyInteger('publish')->comment('1: publish | 2: not publish');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
             $table->softDeletes();

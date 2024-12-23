@@ -17,11 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('author_id');
             $table->string('name');
-            $table->string('name_full');
+            $table->string('full_name');
             $table->bigInteger('price');
             $table->tinyInteger('sale');
             $table->longText('description');
-            $table->tinyInteger('status')->comment('1:active | 2:inactive');
+            $table->tinyInteger('publish')->comment('1: published | 2: not published');
             $table->tinyInteger('hot')->comment('1: product is hot | 2: product is not hot');
             $table->longText('content');
             $table->string('image');
