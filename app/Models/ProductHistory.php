@@ -14,4 +14,9 @@ class ProductHistory extends Model
         'time_import',
         'time_export',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

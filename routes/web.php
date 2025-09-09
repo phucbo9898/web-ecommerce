@@ -1,19 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Frontend\LocaleController;
+use App\Http\Controllers\Frontend\LocaleController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 // Switch between the included languages
-// Route::get('lang/{lang}', [LocaleController::class, 'change'])->name('locale.change');
+Route::get('lang/{lang}', [LocaleController::class, 'change'])->name('locale.change');
 
-// Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-//     includeRouteFiles(__DIR__.'/backend/');
-// });
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    includeRouteFiles(__DIR__.'/backend/');
+});
 
-// Route::group(['as' => 'frontend.'], function () {
-//     includeRouteFiles(__DIR__.'/frontend/');
-// });
+Route::group(['as' => 'frontend.'], function () {
+    includeRouteFiles(__DIR__.'/frontend/');
+});
