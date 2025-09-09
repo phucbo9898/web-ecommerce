@@ -45,7 +45,7 @@ class SlideController extends Controller
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
                 $imageUpload->move(public_path('/upload/slide/image/'), $nameImage);
-                $data['image'] = $nameImage;
+                $data['image'] = '/upload/slide/image/' . $nameImage;
             }
             $handleData = $this->prepareSlide($data);
             Slide::create($handleData);
@@ -94,7 +94,7 @@ class SlideController extends Controller
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
                 $imageUpload->move(public_path('/upload/slide/image/'), $nameImage);
-                $data['image'] = $nameImage;
+                $data['image'] = '/upload/slide/image/' . $nameImage;
             } else {
                 $data['image'] = $slide->image;
             }

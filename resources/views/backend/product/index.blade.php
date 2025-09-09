@@ -120,7 +120,7 @@
                                     <td>
                                         @if ($product->image)
                                             <img style="width:80px;height:80px"
-                                                src="{{ asset('upload/product/image/' . $product->image) }}"
+                                                src="{{ asset($product->image) }}"
                                                 alt="No Avatar" />
                                         @else
                                             <img style="width:80px;height:80px" src="{{ asset('noimg.png') }}"

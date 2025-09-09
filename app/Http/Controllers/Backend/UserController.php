@@ -50,7 +50,7 @@ class UserController extends Controller
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
                 $imageUpload->move(public_path('/upload/user/image/'), $nameImage);
-                $data['image'] = $nameImage;
+                $data['image'] = '/upload/user/image/' . $nameImage;
             }
 
             $handleData = $this->prepareUser($data);
@@ -100,7 +100,7 @@ class UserController extends Controller
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
                 $imageUpload->move(public_path('/upload/user/image/'), $nameImage);
-                $data['image'] = $nameImage;
+                $data['image'] = '/upload/user/image/' . $nameImage;
             } else {
                 $data['image'] = $user->avatar;
             }

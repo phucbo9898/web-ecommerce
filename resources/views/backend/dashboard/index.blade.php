@@ -52,7 +52,7 @@
                         <div class="icon">
                             <i class="ion ion-monitor"></i>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{{ route('admin.product.index') }}" class="small-box-footer">
                             @lang('Xem thêm')
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>

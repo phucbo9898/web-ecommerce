@@ -36,7 +36,7 @@
                                     <td>{{ $product->category->name }}</td>
                                     <td>
                                         @if ($product->image)
-                                            <img style="width:80px;height:80px" src="{{ asset('upload/product/image/' . $product->image) }}"
+                                            <img style="width:80px;height:80px" src="{{ asset($product->image) }}"
                                                 alt="No Avatar" />
                                         @else
                                             <img style="width:80px;height:80px" src="{{ asset('noimg.png') }}"

@@ -6,11 +6,13 @@ use App\Enums\ActiveStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
+use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductHistory;
+use App\Models\Slide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -57,7 +59,7 @@ class ProductController extends Controller
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
                 $imageUpload->move(public_path('/upload/product/image/'), $nameImage);
-                $data['image'] = $nameImage;
+                $data['image'] = '/upload/product/image/' . $nameImage;
             }
 
             $product = $this->prepareProduct($data);
@@ -141,7 +143,7 @@ class ProductController extends Controller
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
                 $imageUpload->move(public_path('/upload/product/image/'), $nameImage);
-                $data['image'] = $nameImage;
+                $data['image'] = '/upload/product/image/' . $nameImage;
             } else {
                 $data['image'] = $product->image;
             }

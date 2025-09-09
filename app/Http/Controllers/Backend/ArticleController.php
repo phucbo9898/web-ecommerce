@@ -49,7 +49,7 @@ class ArticleController extends Controller
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
                 $imageUpload->move(public_path('/upload/article/image/'), $nameImage);
-                $data['image'] = $nameImage;
+                $data['image'] = '/upload/article/image/' . $nameImage;
             }
 
             $handleData = $this->prepareArticle($data);
@@ -100,7 +100,7 @@ class ArticleController extends Controller
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
                 $imageUpload->move(public_path('/upload/slide/image/'), $nameImage);
-                $data['image'] = $nameImage;
+                $data['image'] = '/upload/article/image/' . $nameImage;
             } else {
                 $data['image'] = $article->image;
             }
