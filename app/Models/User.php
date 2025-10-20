@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\UserRole;
+use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -76,8 +77,9 @@ class User extends Authenticatable
 
     public function notificationReceivers()
     {
-        return $this->hasMany(Notification::class, 'receiver');
+        return $this->hasMany(Notification::class, 'user_id', 'id');
     }
+
     public function getUserType()
     {
         return UserType::getUserType($this->role);
@@ -85,6 +87,6 @@ class User extends Authenticatable
 
     public function isSystemAdmin()
     {
-        return $this->role == 'system_admin';
+        return $this->role == UserRole::SYSTEM;
     }
 }

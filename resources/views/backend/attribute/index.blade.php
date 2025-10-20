@@ -49,6 +49,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="d-flex justify-content-center">
+                {{ $attributes->links() }}
+            </div>
             @endif
         </div>
     </section>

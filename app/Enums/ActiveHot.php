@@ -14,7 +14,7 @@ use BenSampo\Enum\Enum;
 final class ActiveHot extends Enum
 {
     const YES = 1;
-    const NO = 0;
+    const NO = 2;
 
     public static function getHotName($hot)
     {

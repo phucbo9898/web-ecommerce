@@ -3,10 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\LocaleController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Switch between the included languages
 Route::get('lang/{lang}', [LocaleController::class, 'change'])->name('locale.change');
 

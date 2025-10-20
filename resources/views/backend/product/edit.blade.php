@@ -25,7 +25,7 @@ use App\Enums\ActiveStatus;
                             </div>
                             <div class="col-md-8">
                                 <img id="img_output" style="width:240px;height:180px; margin-bottom:10px"
-                                     src="{{ asset('upload/product/image/' . $product->image ?? '') }}"/>
+                                     src="{{ asset($product->image ?? '') }}"/>
                                 <input type="file" name="image" id="img_input" class="form-control"/>
                             </div>
                         </div>

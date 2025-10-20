@@ -16,7 +16,7 @@ class AttributeController extends Controller
 {
     public function index()
     {
-        $attributes = Attribute::orderBy('id', 'desc')->get();
+        $attributes = Attribute::orderBy('id', 'desc')->paginate(10);
 
         return view('backend.attribute.index', compact('attributes'));
     }

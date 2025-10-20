@@ -22,7 +22,7 @@
                         @foreach ($articles as $article)
                             <tr>
                                 <td style="width:15%">{{ $article->name ?? '' }}</td>
-                                <td><img style="width:80px;height:80px" src="{{ asset('upload/article/image/' . $article->image ?? '') }}"
+                                <td><img style="width:80px;height:80px" src="{{ asset($article->image ?? '') }}"
                                          alt="No Avatar"/></td>
                                 <td>{{ $article->description ?? '' }}</td>
                                 <td style="width: 11%; text-align: center"><a

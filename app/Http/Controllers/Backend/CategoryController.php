@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Enums\ActiveStatus;
 use App\Enums\PublishEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
-use App\Models\Attribute as ModelsAttribute;
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\CategoryAttribute;
 use App\Models\Product;
 use App\Models\ProductHistory;
 use Carbon\Carbon;
-use Illuminate\Session\Store;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -32,14 +30,14 @@ class CategoryController extends Controller
             $categoryStatus
         );
 
-        $attributes = ModelsAttribute::all();
+        $attributes = Attribute::all();
 
         return view('backend.category.index', compact('categories', 'attributes', 'categoryName', 'attributeId', 'categoryStatus'));
     }
 
     public function create()
     {
-        $attributes = ModelsAttribute::all();
+        $attributes = Attribute::all();
         return view('backend.category.create', compact('attributes'));
     }
 
@@ -71,7 +69,7 @@ class CategoryController extends Controller
             return redirect()->route('admin.category.index')->with('error', __('The requested resource is not available'));
         }
 
-        $attributes = ModelsAttribute::all();
+        $attributes = Attribute::all();
         $categoryAttribute = CategoryAttribute::where('category_id', $id)->pluck('attribute_id')->toArray();
 
         $data = [
@@ -131,6 +129,7 @@ class CategoryController extends Controller
                 case 'status':
                     $category->status = $request->status;
                     $category->save();
+                    $request->session()->flash('success', 'Change status success!');
                     break;
                 default:
                     break;
@@ -140,14 +139,16 @@ class CategoryController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::debug($e);
+            return redirect()->route('admin.category.index')->with('error', 'There is a server error, please contact the administrator.');
         }
     }
 
     private function searchCondition(
         ?string $name = null,
-        ?int $attributeId = null,
-        ?int $status = null
-    ) {
+        ?int    $attributeId = null,
+        ?int    $status = null
+    )
+    {
         return Category::when($name, function ($query, ?string $name) {
             return $query->where('name', 'like', '%' . $name . '%');
         })->when($attributeId, function ($query, ?int $attributeId) {
@@ -156,6 +157,6 @@ class CategoryController extends Controller
             });
         })->when($status, function ($query, ?int $status) {
             return $query->where('status', $status);
-        })->with('categoryAttribute')->orderBy('created_at', 'desc')->get();
+        })->with('categoryAttribute')->orderBy('created_at', 'desc')->paginate(10);
     }
 }

@@ -85,5 +85,12 @@
     @yield('javascript2')
     @yield('my_js')
     <script src="{{ asset('main.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.alert-danger').remove();
+            }, 3000)
+        });
+    </script>
 </body>
 </html>

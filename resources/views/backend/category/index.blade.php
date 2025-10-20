@@ -102,6 +102,9 @@ use App\Enums\PublishEnum;
                         </tbody>
                     </table>
                 </div>
+                <div class="d-flex justify-content-center">
+                    {{ $categories->links() }}
+                </div>
             @endif
         </div>
     </section>

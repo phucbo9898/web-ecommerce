@@ -48,8 +48,8 @@ class ArticleController extends Controller
                 //random name file for save database
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
-                $imageUpload->move(public_path('/upload/article/image/'), $nameImage);
-                $data['image'] = '/upload/article/image/' . $nameImage;
+                $imageUpload->move(public_path('/upload/article/'), $nameImage);
+                $data['image'] = '/upload/article/' . $nameImage;
             }
 
             $handleData = $this->prepareArticle($data);
@@ -99,8 +99,8 @@ class ArticleController extends Controller
                 //random name file for save database
                 $nameImage = Str::random(3) . "_" . $name;
                 // save file
-                $imageUpload->move(public_path('/upload/slide/image/'), $nameImage);
-                $data['image'] = '/upload/article/image/' . $nameImage;
+                $imageUpload->move(public_path('/upload/article/'), $nameImage);
+                $data['image'] = '/upload/article/' . $nameImage;
             } else {
                 $data['image'] = $article->image;
             }

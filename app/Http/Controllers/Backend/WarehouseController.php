@@ -57,15 +57,16 @@ class WarehouseController extends Controller
             if (!$product) {
                 return redirect()->back()->with('error', __('The requested resource is not available'));
             }
+
             if ($request->product_number < 0) {
                 return redirect()->route('admin.warehouse.import')->with('error', 'Vui lòng nhập số nguyên dương!');
             }
 
-            if ($product->quantity - $request->product_number < 0) {
-                return redirect()->route('admin.warehouse.import')->with('error', 'Sản phẩm "' . $product->name . ' " mã ID là ' . $id . ' chỉ còn ' . $product->quantity . ' trong kho !');
+            $productQty = $product->quantity - $request->product_number;
+            if ($productQty < 0) {
+                return redirect()->route('admin.warehouse.import')->with('success', 'Sản phẩm "' . $product->name . ' " mã ID là ' . $id . ' chỉ còn ' . $product->quantity . ' trong kho !');
             }
 
-            $productQty = $product->quantity - $request->product_number;
             $product->update(['quantity' => $productQty]);
 
             ProductHistory::create([

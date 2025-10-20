@@ -13,8 +13,6 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\VoucherController;
 use App\Http\Controllers\Backend\WarehouseController;
 
-// Route::get('/', [AuthController::class, 'test'])->name('index');
-
 Route::get('/login', [AuthController::class, 'showFormLogin']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
