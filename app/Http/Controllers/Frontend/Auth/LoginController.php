@@ -13,6 +13,7 @@ class LoginController extends BaseController
 {
     public function getLogin()
     {
+        // Check logged in
         if (Auth::check()) {
             return redirect()->route('frontend.home');
         }
