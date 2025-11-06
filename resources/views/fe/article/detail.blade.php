@@ -34,7 +34,7 @@
                     </h4>
                     @foreach ($getListAnotherArticles as $anotherArticle)
                         <div style="margin-top: 20px">
-                            <a href="{{ route('article.detail', $anotherArticle->id) }}">➤<b>{{ $anotherArticle->name }}</b></a>
+                            <a href="{{ route('frontend.article.detail', $anotherArticle->uuid) }}">➤<b>{{ $anotherArticle->name }}</b></a>
                         </div>
                     @endforeach
                 </div>

@@ -34,7 +34,7 @@ Route::group(['prefix'=>'auth'],function() {
     Route::get('/register',[RegisterController::class, 'getRegister'])->name('get.register');
     Route::post('/register',[RegisterController::class, 'postRegister']);
     Route::get('/login',[LoginController::class, 'getLogin'])->name('get.login');
-    Route::post('/login',[LoginController::class, 'postLogin']);
+    Route::post('/login',[LoginController::class, 'login']);
     Route::get('/logout',[LoginController::class, 'getLogout'])->middleware('checkLoginUser')->name('get.logout');
     Route::post('/forgot-password',[ForgotPasswordController::class, 'postResetPassword'])->name('post.reset.password');
     Route::get('/reset-password',[ForgotPasswordController::class, 'getChangePasswordReset'])->name('get.change.reset.password');
@@ -44,9 +44,9 @@ Route::group(['prefix'=>'auth'],function() {
 Route::controller(CategoryController::class)->group(function () {
     Route::prefix('category')->group(function () {
         Route::name('category.')->group(function () {
-            Route::get('/{slug}/{id}', 'index')->name('index');
-            Route::get('/{slug}/{id}/{order}', 'indexOrder')->name('index.order');
-            Route::get('/{slug}/{id}/attribute/{at}', 'indexOrderAttribute')->name('index.order.attribute');
+            Route::get('/{uuid}', 'index')->name('index');
+            Route::get('/{uuid}/{order}', 'indexOrder')->name('index.order');
+            Route::get('/{uuid}/attribute/{at}', 'indexOrderAttribute')->name('index.order.attribute');
         });
     });
 });
@@ -54,7 +54,7 @@ Route::controller(CategoryController::class)->group(function () {
 Route::controller(ProductController::class)->group(function () {
     Route::prefix('product')->group(function () {
         Route::name('product.')->group(function () {
-            Route::get('/{slug}/{id}', 'index')->name('index');
+            Route::get('/{uuid}', 'show')->name('show');
         });
     });
 });
@@ -75,7 +75,9 @@ Route::middleware('checkLoginUser')->group(function () {
             Route::post('/edit', [ShoppingCartController::class, 'editProductItem'])->name('edit.product');
             Route::post('/payment-momo', [ShoppingCartController::class, 'paymentMomo'])->name('payment-momo');
             Route::post('/vnpay_payment', [ShoppingCartController::class, 'paymentVNPay'])->name('payment-vnpay');
+            Route::get('/get-coupon', [ShoppingCartController::class, 'getCoupon'])->name('get-coupon');
             Route::get('/add-coupon', [ShoppingCartController::class, 'addCoupon'])->name('add-coupon');
+            Route::get('/remove-coupon', [ShoppingCartController::class, 'removeCoupon'])->name('remove-coupon');
         });
     });
 
@@ -115,7 +117,7 @@ Route::controller(ArticleController::class)->group(function () {
     Route::prefix('article')->group(function () {
         Route::name('article.')->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/detail/{id}', 'getDetailArticle')->name('detail');
+            Route::get('/detail/{uuid}', 'show')->name('detail');
         });
     });
 });

@@ -51,7 +51,7 @@
                                     <tbody>
                                         @foreach ($products as $product)
                                             <tr>
-                                                <td class="li-product-name"><a href="{{ route('product.index', [$product->slug, $product->id]) }}">{{ $product->name }}</a></td>
+                                                <td class="li-product-name"><a href="{{ route('frontend.product.show', [$product->uuid]) }}">{{ $product->name }}</a></td>
                                                 <td class="li-product-thumbnail">
                                                     <a href="#">
                                                         <img width="200px" src="{{ asset($product->image) }}"
@@ -74,9 +74,9 @@
                                                 </td>
                                                 <td>
                                                     <a data-product-name="{{ $product->name }}" class="btn btn-primary button_add_cart"
-                                                       href="{{ route('shopping.add.product', $product->id) }}"><i class="fa fa-shopping-cart"></i>
+                                                       href="{{ route('frontend.shopping.add.product', $product->id) }}"><i class="fa fa-shopping-cart"></i>
                                                     </a>
-                                                    <a href="{{ route('favorite-product.get.delete', $product->id) }}"
+                                                    <a href="{{ route('frontend.favorite-product.get.delete', $product->id) }}"
                                                         data-product-name="{{ $product->name }}"
                                                         class="delete_favorite_product btn btn-danger"><i class="fa fa-trash"></i></a>
                                                 </td>

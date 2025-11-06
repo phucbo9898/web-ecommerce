@@ -111,7 +111,7 @@
                                     <!-- single-product-wrap start -->
                                     <div class="single-product-wrap">
                                         <div class="product-image">
-                                            <a href="{{ route('frontend.product.index', [$product_new->uuid, $product_new->id]) }}">
+                                            <a href="{{ route('frontend.product.show', ['uuid' => $product_new->uuid]) }}">
                                                 @if (isset($product_new->image))
                                                     <img src="{{ asset($product_new->image) }}" alt="Li's Product Image">
                                                 @else
@@ -169,8 +169,9 @@
                                                     </h5>
 
                                                 </div>
+
                                                 <h4><a class="product_name"
-                                                        href="{{ route('frontend.product.index', [$product_new->uuid, $product_new->id]) }}">{{ $product_new->name }}</a>
+                                                        href="{{ route('frontend.product.show', ['uuid' => $product_new->uuid]) }}">{{ $product_new->name }}</a>
                                                 </h4>
 
                                                 <div class="price-box">
@@ -203,7 +204,7 @@
                                                             href="{{ route('frontend.favorite-product.get.add', $product_new->id) }}"><i
                                                                 class="fa fa-heart-o"></i></a></li>
                                                     <li>
-                                                        <a href="{{ route('frontend.product.index', [$product_new->uuid, $product_new->id]) }}"
+                                                        <a href="{{ route('frontend.product.show', ['uuid' => $product_new->uuid]) }}"
                                                             title="quick view" class="quick-view-btn"><i
                                                                 class="fa fa-eye"></i></a>
                                                     </li>
@@ -244,7 +245,7 @@
                                             <div class="single-product-wrap">
                                                 <div class="product-image">
                                                     <a
-                                                        href="{{ route('frontend.product.index', [$product_best_pay->uuid, $product_best_pay->id]) }}">
+                                                        href="{{ route('frontend.product.show', ['uuid' => $product_best_pay->uuid]) }}">
                                                         @if (isset($product_best_pay->image))
                                                             <img src="{{ asset($product_best_pay->image) }}"
                                                                 alt="Li's Product Image">
@@ -304,7 +305,7 @@
 
                                                         </div>
                                                         <h4><a class="product_name"
-                                                                href="{{ route('frontend.product.index', [$product_best_pay->uuid, $product_best_pay->id]) }}">{{ $product_best_pay->name }}</a>
+                                                                href="{{ route('frontend.product.show', ['uuid' => $product_best_pay->uuid]) }}">{{ $product_best_pay->name }}</a>
                                                         </h4>
 
                                                         <div class="price-box">
@@ -341,7 +342,7 @@
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a href="{{ route('frontend.product.index', [$product_best_pay->uuid, $product_best_pay->id]) }}" title="quick view" class="quick-view-btn">
+                                                                <a href="{{ route('frontend.product.show', ['uuid' => $product_best_pay->uuid]) }}" title="quick view" class="quick-view-btn">
                                                                     <i class="fa fa-eye"></i>
                                                                 </a>
                                                             </li>
@@ -385,7 +386,7 @@
                                             <div class="single-product-wrap">
                                                 <div class="product-image">
                                                     <a
-                                                        href="{{ route('frontend.product.index', ['slug' => $product->uuid, 'id' => $product->id]) }}">
+                                                        href="{{ route('frontend.product.show', ['uuid' => $product->uuid]) }}">
                                                         @if (isset($product->image))
                                                             <img src="{{ asset($product->image) }}"
                                                                 alt="Li's Product Image">
@@ -444,7 +445,7 @@
                                                             </h5>
                                                         </div>
                                                         <h4><a class="product_name"
-                                                                href="{{ route('frontend.product.index', [$product->uuid, $product->id]) }}">{{ $product->name }}</a>
+                                                                href="{{ route('frontend.product.show', ['uuid' => $product->uuid]) }}">{{ $product->name }}</a>
                                                         </h4>
 
                                                         <div class="price-box">
@@ -478,7 +479,7 @@
                                                                     href="{{ route('frontend.favorite-product.get.add', ['id' => $product->id]) }}"><i
                                                                         class="fa fa-heart-o"></i></a></li>
                                                             <li>
-                                                                <a href="{{ route('frontend.product.index', [$product->uuid, $product->id]) }}"
+                                                                <a href="{{ route('frontend.product.show', ['uuid' => $product->uuid]) }}"
                                                                     title="quick view" class="quick-view-btn"><i
                                                                         class="fa fa-eye"></i></a>
                                                             </li>
@@ -515,14 +516,14 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="li-blog-single-item pb-25">
                                     <div class="li-blog-banner" style="max-height: 250px; max-width: 370px;">
-                                        <a href="{{ route('frontend.article.detail', ['id' => $article->id]) }}">
+                                        <a href="{{ route('frontend.article.detail', ['uuid' => $article->uuid]) }}">
                                             <img class="img-full" src="{{ asset($article->image) }}" alt="" style="width: 370px !important; height: 250px !important; object-fit: cover !important;">
                                         </a>
                                     </div>
                                     <div class="li-blog-content">
                                         <div class="li-blog-details">
                                             <h5 class="li-blog-heading pt-25"><a
-                                                    href="{{ route('frontend.article.detail', ['id' => $article->id]) }}"
+                                                    href="{{ route('frontend.article.detail', ['uuid' => $article->uuid]) }}"
                                                     class="block-ellipsis">{{ $article->name }}</a></h5>
                                             <div class="li-blog-meta list-article" style="padding: 0px 0 10px;">
                                                 <span class="author" style="color: #aba3a3;"><i
@@ -536,7 +537,7 @@
                                                 </span>
                                             </div>
                                             <p class="block-ellipsis-description">{{ $article->description }}</p>
-                                            <a class="read-more" href="{{ route('frontend.article.detail', ['id' => $article->id]) }}">
+                                            <a class="read-more" href="{{ route('frontend.article.detail', ['uuid' => $article->uuid]) }}">
                                                 @lang('See more ...')
                                             </a>
                                         </div>
