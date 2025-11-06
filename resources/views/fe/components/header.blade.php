@@ -159,11 +159,13 @@ use App\Enums\UserType;
                                 <a href="{{ route('frontend.shopping.cart.index') }}">
                                     <div class="hm-minicart-trigger">
                                         <span class="item-icon"></span>
-                                        <span class="item-text"><span
-                                                class="price_total_cart">{{ \Cart::getSubTotal(0, ',', '.') }}</span>
+                                        <span class="item-text">
+                                            <span class="price_total_cart">
+                                                {{ Auth::check() ? number_format(\Cart::session(Auth::id())->getTotal(), 0, ',', '.') : 0 }}
+                                            </span>
                                             @lang('VND')
                                             <span
-                                                class="cart-item-count cart-item-count-number">{{ \Cart::getContent()->count() }}</span>
+                                                class="cart-item-count cart-item-count-number">{{ Auth::check() ? \Cart::session(Auth::id())->getContent()->count() : 0 }}</span>
                                         </span>
                                     </div>
                                 </a>

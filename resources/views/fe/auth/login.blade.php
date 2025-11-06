@@ -81,7 +81,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('post.reset.password') }}" method="POST" id="form_reset_password">
+                    <form action="{{ route('frontend.post.reset.password') }}" method="POST" id="form_reset_password">
                         @csrf
                         <div class="form-group">
                             <label> @lang('Password recovery email'): </label>

@@ -65,7 +65,7 @@
                         <a class="breadcrumb-hover" href="{{ route('frontend.home') }}">@lang('Home')</a>
                     </li>
                     <li>
-                        <a class="breadcrumb-hover" href="{{ route('category.index', [$product->category->slug, $product->category->id]) }}">{{ $product->category->name }}</a>
+                        <a class="breadcrumb-hover" href="{{ route('frontend.category.index', [$product->category->uuid]) }}">{{ $product->category->name }}</a>
                     </li>
                     <li class="active">{{ $product->name }}</li>
                 </ul>
@@ -163,7 +163,7 @@
                                     <div class="hm-wishlist mr-3">
                                         <a class="button_add_favorite_product" id="hm-wishlist_by_me"
                                            data-product-name="{{ $product->name }}"
-                                           href="{{ route('favorite-product.get.add', $product->id) }}">
+                                           href="{{ route('frontend.favorite-product.get.add', $product->id) }}">
                                             <i class="fa fa-heart-o" id="add_to_wishlist_by_me"></i>
                                             <style>
                                                 #hm-wishlist_by_me {
@@ -180,7 +180,7 @@
                                     </div>
 
                                     <div class="cart-quantity">
-                                        <a href="{{ route('shopping.add.product', $product->id) }}"
+                                        <a href="{{ route('frontend.shopping.add.product', $product->id) }}"
                                            data-product-name="{{ $product->name }}" class="button_add_cart">
                                             <button class="add-to-cart" type="submit">@lang('Buy product')</button>
                                         </a>
@@ -263,7 +263,7 @@
                                             </span>
                                         </div>
                                         <div style="width:60%;margin:0 20px">
-                                            @foreach ($eachstar as $key => $value)
+                                            @foreach ($eachStar as $key => $value)
                                                 @if ($key == $i)
                                                     @if ($product->total_star > 0)
                                                         <span style="width:100%;height:8px;display:block;border: 1px solid #dedede;border-radius:5px;background-color:#dedede"><b style="width:{{ ($value / $product->number_of_reviewers) * 100 }}%;background-color:#f25800;display:block;height:100%;border-radius:5px;"></b></span>
@@ -274,7 +274,7 @@
                                             @endforeach
                                         </div>
                                         <div style="width:30%">
-                                            @foreach ($eachstar as $key => $value)
+                                            @foreach ($eachStar as $key => $value)
                                                 @if ($key == $i)
                                                     @if ($product->total_star > 0)
                                                         <span>{{ $value }} @lang('Evaluate')({{ round(($value / $product->number_of_reviewers) * 100, 2) }}%)</span>
@@ -293,7 +293,7 @@
                                 @else
                                     {{-- <a href="#" class="btn btn-primary js_rating_action"> Gửi đánh giá của bạn </a> --}}
                                     <div style="text-align: center"><b>@lang('To rate the product you need')</b>
-                                        <a href="{{ route('get.login') }}" class="btn btn-primary"> @lang('Login') </a>
+                                        <a href="{{ route('frontend.get.login') }}" class="btn btn-primary"> @lang('Login') </a>
                                     </div>
                                 @endif
                             </div>
@@ -315,7 +315,7 @@
                                 <textarea class="form-control" cols="30" rows="3" id="content_rating"></textarea>
                             </div>
                             <div style="margin-top:15px">
-                                <a href="{{ route('post.rating.product', $product->id) }}" class="btn btn-primary js_rating_product_button">
+                                <a href="{{ route('frontend.post.rating.product', $product->id) }}" class="btn btn-primary js_rating_product_button">
                                     @lang('Submit your review')
                                 </a>
                             </div>
@@ -391,7 +391,7 @@
                                         <!-- single-product-wrap start -->
                                         <div class="single-product-wrap">
                                             <div class="product-image">
-                                                <a href="{{ route('product.index', [$product_in_category_id->slug, $product_in_category_id->id]) }}">
+                                                <a href="{{ route('frontend.product.show', [$product_in_category_id->uuid]) }}">
                                                     @if (isset($product_in_category_id->image))
                                                         <img src="{{ asset($product_in_category_id->image) }}" alt="Li's Product Image">
                                                     @else
@@ -450,7 +450,7 @@
 
                                                     </div>
                                                     <h4><a class="product_name"
-                                                           href="{{ route('product.index', [$product_in_category_id->slug, $product_in_category_id->id]) }}">{{ $product_in_category_id->name }}</a>
+                                                           href="{{ route('frontend.product.show', [$product_in_category_id->uuid]) }}">{{ $product_in_category_id->name }}</a>
                                                     </h4>
 
                                                     <div class="price-box">
@@ -474,16 +474,16 @@
                                                 <div class="add-actions">
                                                     <ul class="add-actions-link">
                                                         <li class="add-cart active">
-                                                            <a class="button_add_cart" data-product-name="{{ $product_in_category_id->name }}" href="{{ route('shopping.add.product', $product_in_category_id->id) }}">
+                                                            <a class="button_add_cart" data-product-name="{{ $product_in_category_id->name }}" href="{{ route('frontend.shopping.add.product', $product_in_category_id->id) }}">
                                                                 @lang('Buy product')
                                                             </a>
                                                         </li>
                                                         <li><a class="links-details button_add_favorite_product"
                                                                data-product-name="{{ $product_in_category_id->name }}"
-                                                               href="{{ route('favorite-product.get.add', $product_in_category_id->id) }}"><i
+                                                               href="{{ route('frontend.favorite-product.get.add', $product_in_category_id->id) }}"><i
                                                                     class="fa fa-heart-o"></i></a></li>
                                                         <li>
-                                                            <a href="{{ route('product.index', [$product_in_category_id->slug, $product_in_category_id->id]) }}"
+                                                            <a href="{{ route('frontend.product.show', ['uuid' => $product_in_category_id->uuid]) }}"
                                                                title="quick view" class="quick-view-btn"><i
                                                                     class="fa fa-eye"></i></a>
                                                         </li>

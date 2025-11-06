@@ -47,7 +47,7 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="li-blog-single-item pb-25">
                                     <div class="li-blog-banner">
-                                        <a href="{{ route('article.detail', ['id' => $article->id]) }}">
+                                        <a href="{{ route('frontend.article.detail', ['uuid' => $article->uuid]) }}">
                                             <img class="img-full" src="{{ asset($article->image) }}" alt="" style="height: 250px !important;">
                                         </a>
                                     </div>
@@ -64,7 +64,7 @@
                                                 </a>
                                             </div>
                                             <h4 class="li-blog-heading"><a
-                                                    href="{{ route('article.detail', ['id' => $article->id]) }}"
+                                                    href="{{ route('frontend.article.detail', ['uuid' => $article->uuid]) }}"
                                                     class="block-ellipsis">{{ $article->name }}</a></h4>
                                         </div>
                                     </div>

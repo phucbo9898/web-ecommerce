@@ -19,14 +19,14 @@
             <div class="row">
                 <div class="col-lg-6 col-12">
                     @if (session()->get('success'))
-                        <x-alert type="success" class="header-message">
+                        <x-utils.alert type="success" class="header-message">
                             {{ session()->get('success') }}
-                        </x-alert>
+                        </x-utils.alert>
                     @endif
                     @if (session()->get('error'))
-                        <x-alert type="danger" class="header-message">
+                        <x-utils.alert type="danger" class="header-message">
                             {{ session()->get('error') }}
-                        </x-alert>
+                        </x-utils.alert>
                     @endif
                     <form method="POST" id="formSaveInfo">
                         @csrf
@@ -73,7 +73,7 @@
                         <input type="hidden" id="type-payment" name="type_payment" value="">
                         <input type="hidden" id="status-payment" name="status_payment" value="">
                         @if(session()->has('coupon'))
-                            <input type="hidden" name="price" value="{{ str_replace('.', '', \Cart::subtotal(0, ',', '.')) * (100 - session()->get('coupon')->sale) / 100 }}">
+                            <input type="hidden" name="price" value="{{ number_format(\Cart::getTotal(), 0, ',', '.') }}">
                         @endif
                     </form>
                 </div>
@@ -92,9 +92,9 @@
                                     @foreach ($products as $product)
                                         <tr class="cart_item">
                                             <td class="cart-product-name"> {{ $product->name }}<strong
-                                                    class="product-quantity"> × {{ $product->qty }}</strong></td>
+                                                    class="product-quantity"> × {{ $product->quantity }}</strong></td>
                                             <td class="cart-product-total"><span
-                                                    class="amount">{{ number_format($product->price * $product->qty, 0, ',', ',') }}
+                                                    class="amount">{{ number_format($product->price * $product->quantity, 0, ',', '.') }}
                                                     @lang('VND')</span></td>
                                         </tr>
                                     @endforeach
@@ -104,21 +104,31 @@
                                         <th>@lang('Total Money')</th>
                                         <td>
                                             <span class="amount">
-{{--                                                @if(session()->has('coupon'))--}}
-                                                    {{ \Cart::subtotal(0, ',', ',')  }} @lang('VND')
-{{--                                                @endif--}}
+                                                {{ number_format(\Cart::getSubTotal(), 0, ',', '.')  }} @lang('VND')
                                             </span>
                                         </td>
                                     </tr>
-                                    @if(session()->has('coupon'))
+                                    @if (count(\Cart::session(auth()->id())->getConditions()) > 0)
+                                        @php
+                                            $cartInfo = \Cart::session(auth()->id())->getConditions();
+                                            $cartInfo = $cartInfo->first();
+                                        @endphp
                                         <tr class="fs-15 amount">
                                             <td class="cart-product-name">@lang('Voucher'):</td>
-                                            <td class="cart-product-total">{{ session()->get('coupon')->code . " (" . session()->get('coupon')->sale. "%" . ")" }}</td>
+                                            <td class="cart-product-total">
+                                                @if ($cartInfo)
+                                                    @foreach ($cartInfo->getAttributes() as $coupon)
+                                                        <div>
+                                                            {{ $coupon['coupon_code'] . ' (-' . $coupon['discount'] . '%)' }}
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
                                         </tr>
                                         <tr class="fs-15 amount">
                                             <td class="cart-product-name">@lang('Total amount after discount'):</td>
                                             <td class="cart-product-total">
-                                                {{ number_format(str_replace('.', '', \Cart::subtotal(0, ',', '.')) * (100 - session()->get('coupon')->sale) / 100) }} @lang('VND')
+                                                {{ number_format(\Cart::getTotal(), 0, ',', '.') }} @lang('VND')
                                             </td>
                                         </tr>
                                     @endif
@@ -175,37 +185,30 @@
                             <div class="order-button-payment">
                                 <input type="radio" name="payment" id="vnpay" value="vnpay" style="width: 15px; height: 13px; margin-bottom: 5px;">
                                 <label>@lang('Payment with VNPay')</label>
-                                <form action="{{ route('shopping.payment-vnpay') }}" method="POST">
+                                <form action="{{ route('frontend.shopping.payment-vnpay') }}" method="POST" id="payment-vnpay">
                                     @csrf
                                     <input type="hidden" class="name" name="name" value="">
                                     <input type="hidden" class="address" name="address" value="">
                                     <input type="hidden" class="phone-number" name="phone_number" value="">
                                     <input type="hidden" class="note" name="note" value="">
                                     <input type="hidden" class="type-payment" name="type_payment" value="">
-                                    @if(session()->has('coupon'))
-                                        <input type="hidden" class="total-momo" name="total_money" value="{{ str_replace('.', '', \Cart::subtotal(0, ',', '.')) * (100 - session()->get('coupon')->sale) / 100 }}">
-                                    @else
-                                        <input type="hidden" class="total-momo" name="total_money" value="{{ \Cart::subtotal(0, ',', '') }}">
-                                    @endif
-{{--                                    <input type="hidden" class="total-momo" name="total_money" value="{{ \Cart::subtotal(0, ',', '') }}">--}}
+                                    <input type="hidden" class="total-momo" name="total_money" value="{{ \Cart::getTotal() }}">
+                                    <input type="hidden" class="total-momo" name="redirect">
                                     <button class="btn btn-danger payment-vnpay d-none" type="submit" name="redirect" style="width: 212px; height: 50px;">@lang('Order')</button>
                                 </form>
                             </div>
-                            <div class="order-button-payment {{ Cart::subtotal(0, ',', '') > 30000000 ? 'd-none' : '' }}">
+                            <div class="order-button-payment {{ \Cart::getTotal() > 30000000 ? 'd-none' : '' }}">
                                 <input type="radio" name="payment" id="momo" value="momo" style="width: 15px; height: 13px; margin-bottom: 5px;">
                                 <label>@lang('Payment with Momo')</label> <br>
-                                <form action="{{ route('shopping.payment-momo') }}" method="POST">
+                                <form action="{{ route('frontend.shopping.payment-momo') }}" method="POST" id="payment-momo">
                                     @csrf
                                     <input type="hidden" class="name" name="name" value="">
                                     <input type="hidden" class="address" name="address" value="">
                                     <input type="hidden" class="phone-number" name="phone_number" value="">
                                     <input type="hidden" class="note" name="note" value="">
                                     <input type="hidden" class="type-payment" name="type_payment" value="">
-                                    @if(session()->has('coupon'))
-                                        <input type="hidden" class="total-momo" name="total_momo" value="{{ str_replace('.', '', \Cart::subtotal(0, ',', '.')) * (100 - session()->get('coupon')->sale) / 100 }}">
-                                    @else
-                                        <input type="hidden" class="total-momo" name="total_momo" value="{{ \Cart::subtotal(0, ',', '') }}">
-                                    @endif
+                                    <input type="hidden" class="total-momo" name="total_momo" value="{{ \Cart::getTotal() }}">
+                                    <input type="hidden" class="total-momo" name="payUrl">
                                     <button class="btn btn-warning payment-momo d-none" style="width: 212px; height: 50px; margin-bottom: 5px;" name="payUrl">@lang('Order')</button>
                                 </form>
                             </div>
@@ -213,7 +216,7 @@
                                 <input type="radio" name="payment" id="normal" value="normal" style="width: 15px; height: 13px; margin-bottom: 5px;">
                                 <label>@lang('Payment on delivery')</label>
                             </div>
-                            <button class="btn btn-primary payment-normal d-none" type="submit" id="submitFormSaveInfo" style="width: 212px; height: 50px;">@lang('Order')</button>
+                            <button class="btn btn-primary payment-normal" id="submitFormSaveInfo" style="width: 212px; height: 50px;">@lang('Order')</button>
                         </div>
                     </div>
                 </div>
@@ -306,51 +309,60 @@
                 }
             })
 
-            if ($("input[name=payment]:checked").val() == 'vnpay') {
-                $(".payment-normal").addClass('d-none')
-                $(".payment-momo").addClass('d-none')
-                $(".payment-vnpay").removeClass('d-none')
-            } else if ($("input[name=payment]:checked").val() == 'momo') {
-                $(".payment-momo").removeClass('d-none')
-                $(".payment-normal").addClass('d-none')
-                $(".payment-vnpay").addClass('d-none')
-            } else if ($("input[name=payment]:checked").val() == 'normal') {
-                $(".payment-normal").removeClass('d-none')
-                $(".payment-momo").addClass('d-none')
-                $(".payment-vnpay").addClass('d-none')
-            }
+            // if ($("input[name=payment]:checked").val() == 'vnpay') {
+            //     $(".payment-normal").addClass('d-none')
+            //     $(".payment-momo").addClass('d-none')
+            //     $(".payment-vnpay").removeClass('d-none')
+            // } else if ($("input[name=payment]:checked").val() == 'momo') {
+            //     $(".payment-momo").removeClass('d-none')
+            //     $(".payment-normal").addClass('d-none')
+            //     $(".payment-vnpay").addClass('d-none')
+            // } else if ($("input[name=payment]:checked").val() == 'normal') {
+            //     $(".payment-normal").removeClass('d-none')
+            //     $(".payment-momo").addClass('d-none')
+            //     $(".payment-vnpay").addClass('d-none')
+            // }
 
-            $("input[name=payment]").on("change", function() {
-                if ($("input[name=payment]:checked").val() == 'vnpay') {
-                    $(".payment-vnpay").removeClass('d-none')
-                    $(".payment-normal").addClass('d-none')
-                    $(".payment-momo").addClass('d-none')
-                    $(".type-payment").val('vnpay')
-                } else if ($("input[name=payment]:checked").val() == 'momo') {
-                    $(".payment-momo").removeClass('d-none')
-                    $(".payment-normal").addClass('d-none')
-                    $(".payment-vnpay").addClass('d-none')
-                    $(".type-payment").val('momo')
-                } else if ($("input[name=payment]:checked").val() == 'normal') {
-                    $(".payment-normal").removeClass('d-none')
-                    $(".payment-momo").addClass('d-none')
-                    $(".payment-vnpay").addClass('d-none')
-                    $(".type-payment").val('normal')
-                }
-            })
+            // $("input[name=payment]").on("change", function() {
+            //     if ($("input[name=payment]:checked").val() == 'vnpay') {
+            //         $(".payment-vnpay").removeClass('d-none')
+            //         $(".payment-normal").addClass('d-none')
+            //         $(".payment-momo").addClass('d-none')
+            //         $(".type-payment").val('vnpay')
+            //     } else if ($("input[name=payment]:checked").val() == 'momo') {
+            //         $(".payment-momo").removeClass('d-none')
+            //         $(".payment-normal").addClass('d-none')
+            //         $(".payment-vnpay").addClass('d-none')
+            //         $(".type-payment").val('momo')
+            //     } else if ($("input[name=payment]:checked").val() == 'normal') {
+            //         $(".payment-normal").removeClass('d-none')
+            //         $(".payment-momo").addClass('d-none')
+            //         $(".payment-vnpay").addClass('d-none')
+            //         $(".type-payment").val('normal')
+            //     }
+            // })
             $("#submitFormSaveInfo").click(function() {
-                $("#type-payment").val('normal')
+                let typePayment = $("input[name=payment]:checked").val()
                 check_name = $("#check_name").val();
                 check_address = $("#check_address").val();
                 check_phone = $("#check_phone").val();
                 check_note = $("#checkout-mess").val();
+
                 if (!check_name || !check_address || !check_phone || !check_note) {
                     // swal("Thành công","Thanh toán không thành công","success");
                     swal("@lang('Warning')",
                         "@lang('Requires you to enter complete data for easy shipping ! Thank you for using our service!')",
                         "warning");
                 } else {
-                    swal({
+                    if (typePayment == 'vnpay') {
+                        $(".type-payment").val(1)
+                        $("#payment-vnpay").submit();
+                    } else if (typePayment == 'momo') {
+                        $(".type-payment").val(2)
+                        $("#payment-momo").submit();
+                    } else if (typePayment == 'normal') {
+                        $(".type-payment").val(3)
+                        swal({
                             title: "@lang('Are you sure')?",
                             text: "@lang('The products in your cart will be paid ! The products will wait for the shop side to check and send for you')",
                             icon: "info",
@@ -372,6 +384,10 @@
                                 });
                             }
                         });
+                    } else {
+                        swal("@lang('Warning')", "@lang('Please select a payment method!')", "warning");
+                        return false;
+                    }
                 }
             });
             // $("#submitFormSaveInfoPayment").click(function() {

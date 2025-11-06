@@ -13,6 +13,7 @@ class BaseController extends Controller
     public function __construct()
     {
         $categories = Category::where('status', ActiveStatus::ACTIVE)->get();
+        
         View::share('categories_search', $categories);
     }
 }

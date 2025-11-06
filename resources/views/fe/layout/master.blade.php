@@ -63,7 +63,7 @@
         @include('fe.components.footer')
 
         <!-- Begin Quick View | Modal Area -->
-        <div class="modal fade modal-wrapper" id="exampleModalCenter">
+        {{-- <div class="modal fade modal-wrapper" id="exampleModalCenter">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -201,7 +201,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Quick View | Modal Area End Here -->
     </div>
     <!-- Body Wrapper End Here -->
