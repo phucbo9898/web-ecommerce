@@ -112,14 +112,16 @@
                                         @php
                                             $cartInfo = \Cart::session(auth()->id())->getConditions();
                                             $cartInfo = $cartInfo->first();
+                                            $totalDiscounts = 0;
                                         @endphp
                                         <tr class="fs-15 amount">
                                             <td class="cart-product-name">@lang('Voucher'):</td>
                                             <td class="cart-product-total">
                                                 @if ($cartInfo)
                                                     @foreach ($cartInfo->getAttributes() as $coupon)
+                                                        @php $totalDiscounts += $coupon['sale']; @endphp
                                                         <div>
-                                                            {{ $coupon['coupon_code'] . ' (-' . $coupon['discount'] . '%)' }}
+                                                            {{ $coupon['code'] . ' (-' . $coupon['sale'] . '%)' . "\n" }}
                                                         </div>
                                                     @endforeach
                                                 @endif
@@ -128,7 +130,7 @@
                                         <tr class="fs-15 amount">
                                             <td class="cart-product-name">@lang('Total amount after discount'):</td>
                                             <td class="cart-product-total">
-                                                {{ number_format(\Cart::getTotal(), 0, ',', '.') }} @lang('VND')
+                                                {{ number_format(\Cart::session(auth()->id())->getTotal() * (100 - $totalDiscounts) / 100, 0, ',', '.') }} @lang('VND')
                                             </td>
                                         </tr>
                                     @endif

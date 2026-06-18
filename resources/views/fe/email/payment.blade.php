@@ -11,7 +11,7 @@
     <div>
         <h3>Cảm ơn bạn đã tin tưởng và đặt mua sản phẩm bên shop. Shop đã nhận được yêu cầu đặt hàng của bạn và đang xử lý, shop sẽ giao hàng đúng thời gian dự kiến</h3>
     </div>
-    <h1 style="text-align: center">Thông tin đơn hàng MGD-{{$transactionId}}</h1>
+    <h1 style="text-align: center">Thông tin đơn hàng MGD-{{$data['transactionId']}}</h1>
     <div style="display:flex; width: 600px; margin-bottom: 10px;">
         <div style="width: 450px;">
             <span>Tên khách hàng: {{$data['name'] ?? ''}}</span><br>
@@ -37,15 +37,15 @@
             @php
                 $stt =1
             @endphp
-            @if(isset($products))
-                @foreach($products as $product)
+            @if(isset($data['products']))
+                @foreach($data['products'] as $product)
                     <tr>
                         <td style="text-align:center;">{{$stt++}}</td>
                         <td style="text-align:center; width: 250px;">{{$product->name}}</td>
-                        <td style="text-align:center;">{{$product->qty}}</td>
-                        <td style="text-align:center;">{{number_format($product->options->price_old,0,',',',')}} VNĐ</td>
-                        <td style="text-align:center;">{{$product->options->sale}}</td>
-                        <td style="text-align:center;">{{number_format(($product->options->price_old * (100 -$product->options->sale)/100) * $product->qty, 0, ',', ',') }} VNĐ</td>
+                        <td style="text-align:center;">{{$product->quantity}}</td>
+                        <td style="text-align:center;">{{number_format($product->attributes->price_old,0,',',',')}} VNĐ</td>
+                        <td style="text-align:center;">{{$product->attributes->sale}}</td>
+                        <td style="text-align:center;">{{number_format(($product->attributes->price_old * (100 -$product->attributes->sale)/100) * $product->quantity, 0, ',', ',') }} VNĐ</td>
                     </tr>
                 @endforeach
             @endif

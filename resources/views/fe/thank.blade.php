@@ -14,7 +14,8 @@
                     </div>
                     <div class="row">
                         <div class="special-product-active owl-carousel">
-                            <a href="{{ route('frontend.home') }}" class="btn btn-info">@lang('Back to home page')</a>
+                            {{-- <a href="{{ route('frontend.home') }}" class="btn btn-info">@lang('Back to home page')</a> --}}
+                            <a href="{{ route('frontend.history-user.index') }}" class="btn btn-info">@lang('Go to order history')</a>
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,7 @@
                 <tr>
                     <th scope="col">#{{ $i++ }}</th>
                     <td>
-                        <a href="{{ route('product.index', [$order->product->slug, $order->product->id]) }}">{{ $order->product->name }}</a>
+                        <a href="{{ route('frontend.product.show', [$order->product->uuid]) }}" class="text-black">{{ $order->product->name }}</a>
                     </td>
                     @if ($order->product->image)
                         <td><img style="width:80px;height:60px"

@@ -6,10 +6,10 @@ use App\Enums\StatusPayment;
 use App\Enums\StatusTransaction;
 use App\Enums\TypePayment;
 use App\Http\Controllers\Controller;
-use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\Voucher;
 use Carbon\Carbon;
 use Darryldecode\Cart\CartCondition;
 use Illuminate\Http\Request;
@@ -123,8 +123,7 @@ class ShoppingCartController extends BaseController
     {
         $userId = Auth::id();
         $cart = \Cart::session($userId);
-
-        $coupon = Coupon::where('coupon_code', $request->coupon)->first();
+        $coupon = Voucher::where('code', $request->coupon)->first();
         if (!$coupon) {
             return response()->json([
                 'status' => 'error',
@@ -136,7 +135,7 @@ class ShoppingCartController extends BaseController
         $existingCoupons = $conditions->first()?->getAttributes() ?? [];
 
         foreach ($existingCoupons as $c) {
-            if ($c['coupon_code'] === $coupon->coupon_code) {
+            if ($c['code'] === $coupon->coupon_code) {
                 return response()->json([
                     'status' => 'warning',
                     'message' => __('This voucher has already been applied'),
@@ -177,7 +176,7 @@ class ShoppingCartController extends BaseController
         $attributes = $conditions->first()?->getAttributes() ?? [];
 
         $updated = array_filter($attributes, function ($c) use ($request) {
-            return $c['coupon_code'] !== $request->coupon_code;
+            return $c['code'] !== $request->coupon_code;
         });
 
         $totalDiscount = collect($updated)->sum('discount');

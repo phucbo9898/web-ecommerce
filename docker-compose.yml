@@ -1,0 +1,27 @@
+services:
+    web:
+        build: .
+        container_name: web-ecommerce
+        ports:
+        - "8000:80"
+        volumes:
+        - .:/var/www/html
+        depends_on:
+        - sql
+        stdin_open: true
+
+    sql:
+        image: mysql:8.0
+        container_name: web-ecommerce-db
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: web-ecommerce
+            MYSQL_USER: kaiser
+            MYSQL_PASSWORD: secret123
+        ports:
+        - "3307:3306"
+        volumes:
+        - mysql_data:/var/lib/mysql
+
+volumes:
+    mysql_data:

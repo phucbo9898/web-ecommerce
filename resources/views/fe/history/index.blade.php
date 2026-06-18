@@ -1,6 +1,9 @@
 @extends('fe.layout.master')
+@php
+    use App\Enums\StatusTransaction;
+    use App\Enums\StatusPayment;
+@endphp
 @section('content')
-    @php use App\Enums\StatusTransaction; @endphp
     <!-- Begin Li's Breadcrumb Area -->
     <div class="breadcrumb-area">
         <div class="container">
@@ -20,7 +23,7 @@
     <div class="col-sm-10 mx-auto">
         <table class="table table-hover table-striped table-list">
             <thead class="thead-dark">
-                <th>ID</th>
+                {{-- <th>ID</th> --}}
                 <th>MGD</th>
                 <th style="width: 15%">Địa chỉ giao hàng</th>
                 <th style="width: 15%">Ghi chú</th>
@@ -35,25 +38,25 @@
                 <tbody>
                     @foreach ($transactions as $transaction)
                         <tr style="cursor: context-menu">
-                            <td>{{ ($transactions->currentPage() - 1) * $transactions->perPage() + $loop->index + 1 }}</td>
+                            {{-- <td>{{ ($transactions->currentPage() - 1) * $transactions->perPage() + $loop->index + 1 }}</td> --}}
                             <td>{{ $transaction->payment_code }}</td>
                             <td>{{ $transaction->address }}</td>
                             <td>{{ $transaction->note }}</td>
                             <td>
-                                @if ($transaction->status == 'completed')
+                                @if ($transaction->status == StatusTransaction::COMPLETED)
                                     <span class="badge badge-success" style="font-size: 14px;width: 136px;">Đã nhận hàng</span>
-                                @elseif ($transaction->status == 'processing')
-                                    <a href="{{ route('history-user.transaction.paid', ['change-status', $transaction->id]) }}"
+                                @elseif ($transaction->status == StatusTransaction::PROCESSING)
+                                    <a href="{{ route('frontend.history-user.transaction.paid', ['change-status', $transaction->id]) }}"
                                         id="appect_receive_products"><span class="badge badge-warning text-white" style="font-size: 14px;width: 136px;">Đã gửi
                                             hàng</span></a>
-                                @elseif ($transaction->status == 'pending')
+                                @elseif ($transaction->status == StatusTransaction::PENDING)
                                   <span class="badge badge-info" style="font-size: 14px;width: 136px;">Chưa xử lý</span>
                                 @else
                                     <span class="badge badge-danger" style="font-size: 14px;width: 136px;">Đã hủy</span>
                                 @endif
                             </td>
                             <td>
-                                @if ($transaction->status_payment == 'Paуment received')
+                                @if ($transaction->status_payment == StatusPayment::RECEIVED)
                                     <span class="badge badge-success" style="font-size: 14px;width: 136px;">Đã thanh toán</span>
                                 @else
                                     <span class="badge badge-warning" style="font-size: 14px;width: 136px;">Chưa thanh toán</span>
@@ -65,17 +68,16 @@
                                        value="{{ date('Y-m-d h:i:s A', strtotime($transaction->created_at ?? '')) }}">
                                 {{ $transaction->created_at }}
                             </td>
-                            <td>{{ number_format($transaction->total, 0, ',', '.') }} VNĐ</td>
+                            <td>{{ number_format($transaction->total_amount, 0, ',', '.') }} VNĐ</td>
                             <td>
-                                <a href="{{ route('history-user.get.order.item', $transaction->id) }}" class="js_order_item badge badge-info"
+                                <a href="{{ route('frontend.history-user.get.order.item', $transaction->id) }}" class="js_order_item badge badge-info"
                                    data-id="{{ $transaction->id }}" data-toggle="modal"
-                                   data-target="#showOrderItem" style="">
-{{--                                    Xem chi tiết--}}
+                                   data-target="#showOrderItem"
+                                >
                                     <i class="fa fa-eye fs-25"></i>
-
                                 </a>
-                                @if($transaction->status == 'pending')
-                                    <a href="{{ route('history-user.transaction.paid', ['cancel-order', $transaction->id]) }}" id="" class="badge badge-danger btn-cancel">
+                                @if($transaction->status == StatusTransaction::PENDING)
+                                    <a href="{{ route('frontend.history-user.transaction.paid', ['cancel-order', $transaction->id]) }}" id="" class="badge badge-danger btn-cancel">
                                         <i class="fa fa-ban fs-25"></i>
                                         {{-- <span class="badge badge-danger text-white" style="font-size: 14px;width: 113.11px;">Hủy đơn hàng</span>--}}
                                     </a>
@@ -84,7 +86,7 @@
                             {{-- custom modal by me --}}
                             <div class="modal fade" id="showOrderItem" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết đơn hàng #id <span
@@ -137,7 +139,6 @@
         $(function() {
             $('.table-list').find('.convert-time').each(function() {
                 var a = moment.tz($(this).val(), Intl.DateTimeFormat().resolvedOptions().timeZone)
-                console.log(a)
                 $(this).parent('td').html(a.format('YYYY-MM-DD HH:mm:ss'))
             });
 

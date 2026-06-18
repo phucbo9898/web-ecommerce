@@ -10,7 +10,16 @@
     @if (Session::has('success_resetpassword'))
         <span class="success_resetpassword" data-check="1"></span>
     @endif
+
     <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30 mx-auto">
+        @if (Session::has('successregister'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>@lang('Success')!</strong> @lang('You have successfully registered') !!!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <!-- Login Form s-->
         <form method="POST">
             @csrf
@@ -52,7 +61,7 @@
                         <div class="d-flex">
                             <div class="d-flex">
                                 <input type="checkbox" id="showPassword" class="mb-0">
-                                <label for="" class="mt-12 ml-2">@lang('Show password')</label>
+                                <label for="showPassword" class="mt-12 ml-2">@lang('Show password')</label>
                             </div>
                         </div>
                     </div>
@@ -132,7 +141,7 @@
                     $("#form_reset_password").submit();
                 }
             });
-            $("#showPassword").click(function () {
+            $("#showPassword").click(function() {
                 if ($(".password").attr('type') == 'password') {
                     $(".password").attr('type', 'text')
                 } else {

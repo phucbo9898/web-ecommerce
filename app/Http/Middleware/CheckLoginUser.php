@@ -22,7 +22,7 @@ class CheckLoginUser
                     'error' => true
                 ]);
             }
-            return redirect()->route('get.login')->with('needLogin', 'Cần đăng nhập');
+            return redirect()->route('frontend.get.login')->with('needLogin', 'Cần đăng nhập');
         }
 
         return $next($request);

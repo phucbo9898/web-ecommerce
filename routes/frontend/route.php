@@ -30,15 +30,15 @@ Route::controller(SearchController::class)->group(function () {
     });
 });
 
-Route::group(['prefix'=>'auth'],function() {
-    Route::get('/register',[RegisterController::class, 'getRegister'])->name('get.register');
-    Route::post('/register',[RegisterController::class, 'postRegister']);
-    Route::get('/login',[LoginController::class, 'getLogin'])->name('get.login');
-    Route::post('/login',[LoginController::class, 'login']);
-    Route::get('/logout',[LoginController::class, 'getLogout'])->middleware('checkLoginUser')->name('get.logout');
-    Route::post('/forgot-password',[ForgotPasswordController::class, 'postResetPassword'])->name('post.reset.password');
-    Route::get('/reset-password',[ForgotPasswordController::class, 'getChangePasswordReset'])->name('get.change.reset.password');
-    Route::post('/reset-password',[ForgotPasswordController::class, 'postChangePasswordReset']);
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('/register', [RegisterController::class, 'getRegister'])->name('get.register');
+    Route::post('/register', [RegisterController::class, 'postRegister']);
+    Route::get('/login', [LoginController::class, 'getLogin'])->name('get.login');
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::get('/logout', [LoginController::class, 'getLogout'])->middleware('checkLoginUser')->name('get.logout');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'postResetPassword'])->name('post.reset.password');
+    Route::get('/reset-password', [ForgotPasswordController::class, 'getChangePasswordReset'])->name('get.change.reset.password');
+    Route::post('/reset-password', [ForgotPasswordController::class, 'postChangePasswordReset']);
 });
 
 Route::controller(CategoryController::class)->group(function () {
@@ -46,17 +46,13 @@ Route::controller(CategoryController::class)->group(function () {
         Route::name('category.')->group(function () {
             Route::get('/{uuid}', 'index')->name('index');
             Route::get('/{uuid}/{order}', 'indexOrder')->name('index.order');
-            Route::get('/{uuid}/attribute/{at}', 'indexOrderAttribute')->name('index.order.attribute');
+            Route::get('/{uuid}/attribute/{id}', 'indexOrderAttribute')->name('index.order.attribute');
         });
     });
 });
 
-Route::controller(ProductController::class)->group(function () {
-    Route::prefix('product')->group(function () {
-        Route::name('product.')->group(function () {
-            Route::get('/{uuid}', 'show')->name('show');
-        });
-    });
+Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+    Route::get('/{uuid}', [ProductController::class, 'show'])->name('show');
 });
 
 Route::middleware('checkLoginUser')->group(function () {
@@ -111,6 +107,15 @@ Route::middleware('checkLoginUser')->group(function () {
             Route::get('/paid/{action}/{id}', [HistoryController::class, 'transactionPaid'])->name('transaction.paid');
         });
     });
+
+    Route::prefix('profile')->group(function () {
+        Route::name('profile.')->group(function () {
+            Route::get('/', [ProfileController::class, 'index'])->name('index');
+            Route::put('/update/{id}', [ProfileController::class, 'update'])->name('update');
+        });
+    });
+
+    Route::get('/thank', [FeatureUserController::class, 'thankPage'])->name('thank');
 });
 
 Route::controller(ArticleController::class)->group(function () {

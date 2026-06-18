@@ -52,7 +52,6 @@
             </div>
         </div>
     </div>
-    </div>
     <!-- Contact Main Page Area End Here -->
 @endsection
 

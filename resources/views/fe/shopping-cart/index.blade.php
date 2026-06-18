@@ -163,12 +163,11 @@
                                                     $cartInfo = $cartInfo->first();
                                                 @endphp
                                                 @if ($cartInfo)
-                                                {{-- @dd(count($cartInfo->getAttributes())) --}}
                                                     @foreach ($cartInfo->getAttributes() as $coupon)
                                                         <div class="mb-1 d-block">
-                                                            <span>{{ $coupon['coupon_code'] . ' (-' . $coupon['discount'] . '%)' }}</span>
+                                                            <span>{{ $coupon['code'] . ' (-' . $coupon['sale'] . '%)' }}</span>
                                                             <button class="btn btn-danger delete-coupon"
-                                                                data-id="{{ $coupon['coupon_code'] }}">x</button>
+                                                                data-id="{{ $coupon['code'] }}">x</button>
                                                         </div>
                                                     @endforeach
                                                 @endif

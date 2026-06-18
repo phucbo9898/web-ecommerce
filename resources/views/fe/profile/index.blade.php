@@ -15,7 +15,7 @@
                     </div>
                     <!-- Begin Li's Tab Menu Content Area -->
                     <div class="card-body">
-                        <form action="{{ route('profile.update', ['id' => $profile->id]) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('frontend.profile.update', ['id' => $profile->id]) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="">

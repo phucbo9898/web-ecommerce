@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\SlideController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\VoucherController;
 use App\Http\Controllers\Backend\WarehouseController;
+// use TransactionController
 
 Route::get('/login', [AuthController::class, 'showFormLogin']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -59,15 +60,15 @@ Route::group(['middleware' => 'CheckAdminLogin'], function () {
         Route::post('/update/{id}', [ArticleController::class, 'update'])->name('update');
         Route::get('/{action}/{id}', [ArticleController::class, 'handle'])->name('handle');
     });
-    //
-    //    Route::group(['prefix' => 'transaction'], function () {
-    //        Route::get('/', [TransactionController::class, 'index'])->name('admin.transaction.index');
-    //        Route::get('/orderItem/{id}', [TransactionController::class, 'getOrderItem'])->name('admin.get.order.item');
-    //        Route::get('/paid/{id}', [TransactionController::class, 'transactionPaid'])->name('admin.transaction.paid');
-    //        Route::get('/{action}/{id}', [TransactionController::class, 'handle'])->name('admin.transaction.handle');
-    //        Route::get('/export/transaction-pdf/{id}', [TransactionController::class, 'exportTransactionPdf'])->name('admin.get.export.transaction');
+
+    //    Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
+    //        Route::get('/', [TransactionController::class, 'index'])->name('index');
+    //        Route::get('/orderItem/{id}', [TransactionController::class, 'getOrderItem'])->name('get.order.item');
+    //        Route::get('/paid/{id}', [TransactionController::class, 'transactionPaid'])->name('paid');
+    //        Route::get('/{action}/{id}', [TransactionController::class, 'handle'])->name('handle');
+    //        Route::get('/export/transaction-pdf/{id}', [TransactionController::class, 'exportTransactionPdf'])->name('export');
     //    });
-    //
+
     Route::group(['prefix' => 'comment', 'as' => 'comment.'], function () {
         Route::get('/', [RatingController::class, 'index'])->name('index');
         Route::get('/{action}/{id}', [RatingController::class, 'action'])->name('action');

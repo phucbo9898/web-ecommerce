@@ -2,10 +2,66 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enums\StatusTransaction;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class HistoryController extends Controller
+class HistoryController extends BaseController
 {
-    //
+    public function index()
+    {
+        $user = Auth::user();
+        $transactions = Transaction::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
+        $countTransaction = $transactions->count();
+        $data = [
+            'transactions' => $transactions,
+            'count' => $countTransaction
+        ];
+
+        return view('fe.history.index', $data);
+    }
+
+    public function getOrderItem(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $transaction = Transaction::where('id', $id)->first();
+            $orders = Order::where('transaction_id', $id)->get();
+            $html = view('fe.history.orderItem', compact('orders', 'transaction'))->render();
+            return \response()->json($html);
+        }
+    }
+
+    public function transactionPaid(Request $request, $action, $id)
+    {
+        $transaction = Transaction::find($id);
+        $orders = Order::where('transaction_id', $id)->get();
+
+        if ($action) {
+            switch ($action) {
+                case 'change-status':
+                    $transaction->status = StatusTransaction::COMPLETED;
+                    $transaction->save();
+                    break;
+                case 'cancel-order':
+                    if ($orders) {
+                        foreach ($orders as $order) {
+                            // find product in order
+                            $product = Product::find($order->product_id);
+                            // subtract number product in stock
+                            $product->quantity =  $product->quantity + $order->quantity;
+                            $product->qty_pay = $product->qty_pay - $order->quantity;
+                            $product->save();
+                        }
+                    }
+                    $transaction->status = StatusTransaction::CANCELED;
+                    $transaction->save();
+                    break;
+            }
+            return redirect()->back();
+        }
+    }
 }

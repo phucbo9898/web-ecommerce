@@ -42,7 +42,7 @@ class LoginController extends BaseController
 
     public function getLogout()
     {
-        \Cart::destroy();
+        \Cart::session(Auth::id())->clear();
         Session::forget('coupon');
         Auth::logout();
         return redirect()->route('frontend.home');

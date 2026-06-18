@@ -9,19 +9,19 @@
             Địa chỉ giao hàng: {{ $transaction->address ?? '' }}. <br>
             Lời nhắn từ khách hàng: {{ $transaction->note ?? '' }} <br>
             Trạng thái giao dịch:
-            @if ($transaction->status == 0)
+            @if ($transaction->status == 1)
                 <b>Đang xử lý</b>
-            @elseif($transaction->status == 1)
-                <b>Đã gửi hàng</b>
             @elseif($transaction->status == 2)
+                <b>Đã gửi hàng</b>
+            @elseif($transaction->status == 3)
                 <b>Đã nhận hàng</b>
             @else
-                <b>Không xác định</b>
+                <b>Hủy</b>
             @endif
         </p>
     </div>
 
-    <a href="{{ route('admin.get.export.transaction', $transaction->id) }}"
+    <a href="{{ route('admin.transaction.export', $transaction->id) }}"
        class="btn btn-success ml-2" style="float: right; margin-bottom: 5px;}">
         Xuất PDF
     </a>

@@ -1,4 +1,5 @@
 @extends('fe.layout.master')
+
 @section('content')
     <!-- Begin Li's Breadcrumb Area -->
     <div class="breadcrumb-area">

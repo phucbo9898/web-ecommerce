@@ -1,9 +1,11 @@
 @extends('fe.layout.master')
 @section('content')
     <style>
-        .button_add_favorite_product:hover, .quick-view:hover {
+        .button_add_favorite_product:hover,
+        .quick-view:hover {
             color: #166ac9 !important;
         }
+
         .button_add_cart:hover {
             color: #ffffff !important;
         }
@@ -33,8 +35,8 @@
                                     <div class="row product-layout-list">
                                         <div class="col-lg-2 col-md-5 ">
                                             <div class="product-image mb-3">
-                                                <a href="{{ route('product.index', [$product->slug, $product->id]) }}"
-                                                   style="width: 200px; height: 200px;">
+                                                <a href="{{ route('frontend.product.show', [$product->uuid]) }}"
+                                                    style="width: 200px; height: 200px;">
                                                     @if (isset($product->image))
                                                         <img src="{{ asset($product->image) }}" alt="Li's Product Image">
                                                     @else
@@ -65,12 +67,12 @@
                                                         </h5>
                                                         <div class="rating-box">
                                                             <?php
-                                                                $point_product_searh = 0;
-                                                                if ($product->number_of_reviewers > 0) {
-                                                                    $point_product_searh = round($product->total_star / $product->number_of_reviewers);
-                                                                } else {
-                                                                    $point_product_searh = -1;
-                                                                }
+                                                            $point_product_searh = 0;
+                                                            if ($product->number_of_reviewers > 0) {
+                                                                $point_product_searh = round($product->total_star / $product->number_of_reviewers);
+                                                            } else {
+                                                                $point_product_searh = -1;
+                                                            }
                                                             ?>
                                                             <ul class="rating">
                                                                 @if ($point_product_searh == -1)
@@ -94,7 +96,7 @@
                                                         </div>
                                                     </div>
                                                     <h4><a class="product_name"
-                                                           href="{{ route('product.index', [$product->slug, $product->id]) }}">{{ $product->name }}</a>
+                                                            href="{{ route('frontend.product.show', [$product->uuid]) }}">{{ $product->name }}</a>
                                                     </h4>
                                                     <div class="price-box">
                                                         <span
@@ -109,23 +111,22 @@
                                             <div class="shop-add-action mb-xs-30">
                                                 <ul class="add-actions-link">
                                                     <li class="add-cart">
-                                                        <a class="button_add_cart"
-                                                           data-product-name="{{ $product->name }}"
-                                                           href="{{ route('shopping.add.product', $product->id) }}">
+                                                        <a class="button_add_cart" data-product-name="{{ $product->name }}"
+                                                            href="{{ route('frontend.shopping.add.product', $product->id) }}">
                                                             Mua sản phẩm
                                                         </a>
                                                     </li>
                                                     <li class="wishlist">
                                                         <a class="button_add_favorite_product"
-                                                           href="{{ route('favorite-product.get.add', $product->id) }}"
-                                                           data-product-name="{{ $product->name }}">
+                                                            href="{{ route('frontend.favorite-product.get.add', $product->id) }}"
+                                                            data-product-name="{{ $product->name }}">
                                                             <i class="fa fa-heart-o"></i>
                                                             Thêm vào sản phẩm yêu thích
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a class="quick-view"
-                                                           href="{{ route('product.index', [$product->slug, $product->id]) }}">
+                                                            href="{{ route('frontend.product.show', [$product->uuid]) }}">
                                                             <i class="fa fa-eye"></i>Xem chi tiết
                                                         </a>
                                                     </li>
@@ -149,15 +150,15 @@
 @endsection
 @section('javascript')
     <script>
-        $(function () {
-            $(".button_add_favorite_product").click(function (event) {
+        $(function() {
+            $(".button_add_favorite_product").click(function(event) {
                 event.preventDefault();
                 name_product = $(this).attr("data-product-name");
                 url = $(this).attr("href");
                 $.ajax({
                     method: "GET",
                     url: url
-                }).done(function (result) {
+                }).done(function(result) {
                     if (result.status == 1) {
                         swal("Thành công !", "Đã thêm sản phẩm " + name_product +
                             " vào sản phẩm yêu thích của bạn!", "success");
@@ -172,14 +173,14 @@
                     }
                 });
             });
-            $(".button_add_cart").click(function (event) {
+            $(".button_add_cart").click(function(event) {
                 event.preventDefault();
                 url = $(this).attr("href");
                 name_product = $(this).attr("data-product-name");
                 $.ajax({
                     method: "GET",
                     url: url
-                }).done(function (result) {
+                }).done(function(result) {
                     if (result.status == 1) {
                         swal("Thành công !", "Đã thêm sản phẩm " + name_product + " vào giỏ hàng !",
                             "success");

@@ -1,6 +1,15 @@
 @extends('fe.layout.master')
 
 @section('content')
+    <style>
+        .hover-mail {
+            color: blue;
+        }
+
+        .hover-mail:hover {
+            color: #bcc029;
+        }
+    </style>
     <!-- Begin Li's Breadcrumb Area -->
     <div class="breadcrumb-area">
         <div class="container">
@@ -45,7 +54,7 @@
                             </div>
                             <div class="single-contact-block last-child">
                                 <h4><i class="fa fa-envelope-o"></i>&ensp;Email</h4>
-                                <a href="mailto://phucbo9898@gmail.com" class="hovermail">phucbo9898@gmail.com</a>
+                                <a href="mailto://phucbo9898@gmail.com" class="hover-mail">phucbo9898@gmail.com</a>
                             </div>
                         </div>
                     </div>
@@ -53,16 +62,5 @@
             </div>
         </div>
     </div>
-    </div>
     <!-- Contact Main Page Area End Here -->
 @endsection
-
-<style>
-    .hovermail {
-        color: blue;
-    }
-
-    .hovermail:hover {
-        color: #bcc029;
-    }
-</style>

@@ -147,8 +147,7 @@ use App\Enums\UserType;
                             @if (Auth::check())
                                 <li class="hm-wishlist">
                                     <a href="#" data-toggle="modal" data-target="#exampleModal">
-                                        <span
-                                            class="cart-item-count wishlist-item-count">{{ Auth::user()->notificationReceivers->count() }}</span>
+                                        <span class="cart-item-count wishlist-item-count">{{ Auth::user()->notificationReceivers->count() }}</span>
                                         <i class="fa fa-bell-o"></i>
                                     </a>
                                 </li>

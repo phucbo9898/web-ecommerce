@@ -123,6 +123,7 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
             $product = Product::where('id', $id)->first();
+
             if (!$product) {
                 return redirect()->route('admin.product.index')->with('error', __('The requested resource is not available'));
             }
@@ -160,10 +161,11 @@ class ProductController extends Controller
                         ['attribute_id', '=', $key],
                         ['value', '=', $value]
                     ])->first();
+                    
                     if ($check_attribute_value) {
                         // save product_id and atribute_value_id in product_atribute
                         $product_attribute = new ProductAttribute();
-                        $product_attribute->product_id = $result->id ?? '';
+                        $product_attribute->product_id = $product->id ?? '';
                         $product_attribute->attribute_value_id = $check_attribute_value->id ?? '';
                         $product_attribute->save();
                     } else {
@@ -174,7 +176,7 @@ class ProductController extends Controller
                         $attribute_value->save();
                         // save product_id and atribute_value_id in product_atribute
                         $product_attribute = new ProductAttribute();
-                        $product_attribute->product_id = $result->id ?? '';
+                        $product_attribute->product_id = $product->id ?? '';
                         $product_attribute->attribute_value_id = $attribute_value->id ?? '';
                         $product_attribute->save();
                     }
