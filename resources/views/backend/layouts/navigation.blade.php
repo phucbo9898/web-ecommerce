@@ -1,7 +1,7 @@
 {{-- Main Sidebar Container --}}
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     {{-- Brand Logo --}}
-    <a href="#" class="brand-link">
+    <a href="{{ route('admin.home') }}" class="brand-link">
         <img src="{{ asset('admin_lte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Trang quản trị</span>
@@ -15,91 +15,28 @@
                 data-accordion="false">
                 {{-- Tab category --}}
                 <li class="nav-item has-treeview {{ request()->is('admin/categories*') ? 'menu-open' : '' }}">
-                    <a class="nav-link {{ request()->is('admin/categories*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.category.index') }}" class="nav-link {{ request()->is('admin/categories*') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-cubes"></i>
-                        <p>
-                            @lang('Danh mục sản phẩm')
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
+                        <p>@lang('Danh mục sản phẩm')</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ Route('admin.category.index') }}" style="margin-left: 15%;padding-left: 0px;"
-                               class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('Danh sách')</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.category.create') }}" style="margin-left: 15%;padding-left: 0px;"
-                               class="nav-link {{ request()->is('admin/categories/create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('Tạo mới')</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 {{-- End tab Category --}}
 
                 {{-- Tab Attribute --}}
                 <li class="nav-item has-treeview {{ request()->is('admin/attribute*') ? 'menu-open' : '' }}">
-                    <a class="nav-link {{ request()->is('admin/attribute*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.attribute.index') }}" class="nav-link {{ request()->is('admin/attribute*') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-flask"></i>
-                        <p>
-                            @lang('Thuộc tính')
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
+                        <p>@lang('Thuộc tính')</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ Route('admin.attribute.index') }}" style="margin-left: 15%;padding-left: 0px;"
-                                class="nav-link {{ request()->is('admin/attribute') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('Danh sách')</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ Route('admin.attribute.create') }}" style="margin-left: 15%;padding-left: 0px;"
-                                class="nav-link {{ request()->is('admin/attribute/create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('Tạo mới')</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 {{-- End tab Attribute --}}
 
                 {{-- Tab product --}}
                 <li class="nav-item has-treeview {{ request()->is('admin/product*') ? 'menu-open' : '' }}">
-                    <a class="nav-link {{ request()->is('admin/product*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.product.index') }}" class="nav-link {{ request()->is('admin/product*') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-desktop"></i>
-                        <p>
-                            @lang('Sản phẩm')
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
+                        <p>@lang('Sản phẩm')</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.product.index') }}" style="margin-left: 15%;padding-left: 0px;"
-                                class="nav-link {{ request()->is('admin/product') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('Danh sách')</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.product.create') }}" style="margin-left: 15%;padding-left: 0px;"
-                                class="nav-link {{ request()->is('admin/product/create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('Tạo mới')</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 {{-- End tab product --}}
 

@@ -28,4 +28,9 @@ class Transaction extends Model
     {
         $query->where('status', $value);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

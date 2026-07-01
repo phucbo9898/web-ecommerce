@@ -157,6 +157,6 @@ class CategoryController extends Controller
             });
         })->when($status, function ($query, ?int $status) {
             return $query->where('status', $status);
-        })->with('categoryAttribute')->orderBy('created_at', 'desc')->paginate(10);
+        })->with('categoryAttribute')->withCount('products')->orderBy('created_at', 'desc')->paginate(5);
     }
 }

@@ -14,13 +14,15 @@ final class StatusTransaction extends Enum
     CONST PENDING = 1;
     CONST PROCESSING = 2;
     CONST COMPLETED = 3;
-    CONST CANCELED = 4;
+    CONST SHIPPING = 4;
+    CONST CANCELED = 5;
 
     public static function getStatusTransaction($status)
     {
         $defineStatus = [
             'pending',
             'processing',
+            'shipping',
             'completed',
             'canceled'
         ];

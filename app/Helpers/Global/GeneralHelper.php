@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusTransaction;
 use App\Models\Attribute;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -66,8 +67,8 @@ if (!function_exists('chart')) {
             $date = Carbon::today()->subDays($i)->format('Y-m-d');
             $days[] = Carbon::today()->subDays($i)->format('d-m');
             $totals[] = Transaction::where(function ($query) use ($date) {
-                $query->whereDate('created_at', $date)
-                    ->whereStatus(2);
+                $query->whereDate('updated_at', $date)
+                    ->whereStatus(StatusTransaction::COMPLETED);
             })->sum('total_amount');
         }
 

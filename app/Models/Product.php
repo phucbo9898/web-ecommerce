@@ -50,4 +50,19 @@ class Product extends Model
     {
         return $this->hasMany(ProductHistory::class, 'product_id');
     }
+
+    public function checkQuantity($quantity)
+    {
+        $colorText = '';
+
+        if ($quantity > 10) {
+            $colorText = 'text-success';
+        } else if ($quantity <= 10 && $quantity > 5) {
+            $colorText = 'text-warning';
+        } else {
+            $colorText = 'text-danger';
+        }
+
+        return $colorText;
+    }
 }

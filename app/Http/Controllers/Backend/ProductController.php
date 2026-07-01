@@ -63,6 +63,8 @@ class ProductController extends Controller
             }
 
             $product = $this->prepareProduct($data);
+            $product['qty_pay'] = 0;
+            $product['quantity'] = 0;
             $result = Product::create($product);
 
             foreach ($data as $key => $value) {
@@ -161,7 +163,7 @@ class ProductController extends Controller
                         ['attribute_id', '=', $key],
                         ['value', '=', $value]
                     ])->first();
-                    
+
                     if ($check_attribute_value) {
                         // save product_id and atribute_value_id in product_atribute
                         $product_attribute = new ProductAttribute();

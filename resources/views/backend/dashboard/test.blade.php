@@ -183,42 +183,6 @@
             object-fit: cover;
         }
 
-        /* ===== chú thích màu tồn kho (mới) ===== */
-        .stock-legend {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            font-size: 12px;
-            color: #888;
-        }
-
-        .stock-legend .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            white-space: nowrap;
-        }
-
-        .stock-legend .legend-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .stock-legend .legend-dot.success {
-            background: #28a745;
-        }
-
-        .stock-legend .legend-dot.warning {
-            background: #f1b40f;
-        }
-
-        .stock-legend .legend-dot.danger {
-            background: #dc3545;
-        }
-
         /* ===== tổng quan hệ thống: 4 khối riêng biệt (hạ cấp, gọn) ===== */
         .mini-overview-item {
             background: #fff;
@@ -265,11 +229,6 @@
             .order-status-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .stock-legend {
-                width: 100%;
-                margin-top: 8px;
-            }
         }
 
         /* ===== list-group items gọn hơn ===== */
@@ -292,54 +251,8 @@
     <span class="chart_seven_days" data-chart="{{ $chart['total_price_seven_days_edit'] ?? '' }}"></span>
     <span class="chart_time_seven_days" data-chart-time="{{ $chart['time_chart'] ?? '' }}"></span>
     <!-- Main content -->
-    <section class="content">
+    <section class="content mt-3">
         <div class="container-fluid">
-{{-- ===== HÀNG 6 (HẠ CẤP): TỔNG QUAN HỆ THỐNG ===== --}}
-            <p class="section-title">@lang('Tổng quan hệ thống')</p>
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <div class="info-box">
-                        <span class="info-box-icon" style="background:#e6f7ee;color:#1d9e75;"><i class="ion ion-monitor"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">@lang('Sản phẩm')</span>
-                            <span class="info-box-number">{{ $products ?? 0 }}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="info-box">
-                        <span class="info-box-icon" style="background:#fff3cd;color:#c79100;"><i class="ion ion-person-stalker"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">@lang('Thành viên')</span>
-                            <span class="info-box-number">{{ $users ?? 0 }}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="info-box">
-                        <span class="info-box-icon" style="background:#fde2e4;color:#c2496a;"><i class="ion ion-ios-paper-outline"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">@lang('Tin tức')</span>
-                            <span class="info-box-number">{{ $articles ?? 0 }}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="info-box">
-                        <span class="info-box-icon" style="background:#e6f1fb;color:#185fa5;"><i class="fas fa-ticket-alt"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">@lang('Phiếu giảm giá đang chạy')</span>
-                            <div class="d-flex align-items-center">
-                                <span class="info-box-number">{{ $activeCoupons ?? 0 }}</span>
-                                @if (($expiringCoupons ?? 0) > 0)
-                                    <span class="info-box-number text-danger" style="font-weight: normal; font-size: 12px; vertical-align: ">({{ $expiringCoupons }} @lang('sắp hết hạn'))</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
 
             {{-- ===== HÀNG 1: SỐ LIỆU QUAN TRỌNG NHẤT — CẦN HÀNH ĐỘNG NGAY ===== --}}
             <div class="row">
@@ -459,19 +372,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="m-0 font-weight-bold text-primary mr-3">@lang('Sản phẩm bán chạy trong tháng')</h6>
-                                <a href="{{ route('admin.product.index') }}"
-                                    class="small text-muted">@lang('Xem tất cả')</a>
-                            </div>
-                            <div class="stock-legend mt-2">
-                                <span class="mr-1">@lang('Tồn kho'):</span>
-                                <span class="legend-item"><span
-                                        class="legend-dot success"></span>@lang('> 10')</span>
-                                <span class="legend-item"><span class="legend-dot warning"></span>6 - 10</span>
-                                <span class="legend-item"><span class="legend-dot danger"></span>@lang('≤ 5')</span>
-                            </div>
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-primary">@lang('Sản phẩm bán chạy trong tháng')</h6>
+                            <a href="{{ route('admin.product.index') }}" class="small text-muted">@lang('Xem tất cả')</a>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-hover mb-0">
@@ -502,8 +405,7 @@
                                                 </div>
                                             </td>
                                             <td class="text-right">{{ $product->sold_quantity }}</td>
-                                            <td
-                                                class="text-right font-weight-bold {{ $product->checkQuantity($product->quantity) }}">
+                                            <td class="text-right {{ $product->checkQuantity($product->quantity) }}">
                                                 {{ $product->quantity }}
                                             </td>
                                             <td class="text-right">{{ number_format($product->revenue) }} ₫</td>
@@ -526,11 +428,9 @@
             <div class="row">
                 <div class="col-lg-7">
                     <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="m-0 font-weight-bold text-primary">@lang('Đơn hàng gần đây')</h6>
-                                <a href="#" class="small text-muted">@lang('Xem tất cả')</a>
-                            </div>
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-primary">@lang('Đơn hàng gần đây')</h6>
+                            <a href="#" class="small text-muted">@lang('Xem tất cả')</a>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-hover mb-0">
@@ -538,8 +438,8 @@
                                     <tr>
                                         <th>@lang('Mã đơn')</th>
                                         <th>@lang('Khách hàng')</th>
-                                        <th class="text-right">@lang('Trạng thái')</th>
                                         <th class="text-right">@lang('Giá trị')</th>
+                                        <th class="text-right">@lang('Trạng thái')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -547,11 +447,11 @@
                                         <tr>
                                             <td>#{{ $order->code }}</td>
                                             <td>{{ $order->customer_name }}</td>
+                                            <td class="text-right">{{ number_format($order->total) }} ₫</td>
                                             <td class="text-right">
                                                 <span
                                                     class="badge badge-{{ $order->status_color }}">{{ $order->status_label }}</span>
                                             </td>
-                                            <td class="text-right">{{ number_format($order->total) }} ₫</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -566,37 +466,80 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="m-0 font-weight-bold text-primary">@lang('Kho hàng sắp hết')</h6>
-                                <a href="{{ route('admin.product.index') }}"
-                                    class="small text-muted">@lang('Xem tất cả')</a>
-                            </div>
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-primary">@lang('Kho hàng sắp hết')</h6>
+                            <a href="{{ route('admin.product.index') }}" class="small text-muted">@lang('Xem tất cả')</a>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-hover mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Sản phẩm</th>
-                                        <th>Số lượng</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     @forelse($lowStockProducts ?? [] as $product)
                                         <tr>
                                             <td>{{ $product->name }}</td>
-                                            <td class="{{ $product->checkQuantity($product->quantity) }}">
-                                                {{ $product->quantity }} @lang('còn lại')
+                                            <td
+                                                class="text-right {{ $product->stock <= 5 ? 'text-danger' : 'text-warning' }}">
+                                                {{ $product->stock }} @lang('còn lại')
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="2" class="text-muted-light py-4">
+                                            <td colspan="2" class="text-center text-muted-light py-4">
                                                 @lang('Chưa có dữ liệu')</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            {{-- ===== HÀNG 6 (HẠ CẤP): TỔNG QUAN HỆ THỐNG ===== --}}
+            <p class="section-title">@lang('Tổng quan hệ thống')</p>
+            <div class="row">
+                <div class="col-lg-3 col-6 mb-4">
+                    <a href="{{ route('admin.product.index') }}" class="mini-overview-item">
+                        <span class="icon-wrap" style="background:#e6f7ee;color:#1d9e75;"><i
+                                class="ion ion-monitor"></i></span>
+                        <div>
+                            <div class="mini-num">{{ $products ?? 0 }}</div>
+                            <div class="mini-label">@lang('Sản phẩm')</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-6 mb-4">
+                    <a href="{{ route('admin.user.index') }}" class="mini-overview-item">
+                        <span class="icon-wrap" style="background:#fff3cd;color:#c79100;"><i
+                                class="ion ion-person-stalker"></i></span>
+                        <div>
+                            <div class="mini-num">{{ $users ?? 0 }}</div>
+                            <div class="mini-label">@lang('Thành viên')</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-6 mb-4">
+                    <a href="#" class="mini-overview-item">
+                        <span class="icon-wrap" style="background:#fde2e4;color:#c2496a;"><i
+                                class="ion ion-ios-paper-outline"></i></span>
+                        <div>
+                            <div class="mini-num">{{ $articles ?? 0 }}</div>
+                            <div class="mini-label">@lang('Tin tức')</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-6 mb-4">
+                    <div class="mini-overview-item">
+                        <span class="icon-wrap" style="background:#e6f1fb;color:#185fa5;"><i
+                                class="fas fa-ticket-alt"></i></span>
+                        <div>
+                            <div class="mini-num">{{ $activeCoupons ?? 0 }}</div>
+                            <div class="mini-label">
+                                @lang('Phiếu giảm giá đang chạy')
+                                @if (($expiringCoupons ?? 0) > 0)
+                                    <span class="text-danger">· {{ $expiringCoupons }} @lang('sắp hết hạn')</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -613,7 +556,7 @@
                         <ul class="list-group list-group-flush">
                             @forelse($recentPosts ?? [] as $post)
                                 <li class="list-group-item">
-                                    <i class="far fa-file-alt text-muted mr-1"></i> {{ $post->name }}
+                                    <i class="far fa-file-alt text-muted mr-1"></i> {{ $post->title }}
                                 </li>
                             @empty
                                 <li class="list-group-item text-center text-muted-light">@lang('Chưa có dữ liệu')</li>
@@ -649,7 +592,7 @@
                             @forelse($activeCouponList ?? [] as $coupon)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span>{{ $coupon->code }}</span>
-                                    <span>- {{ $coupon->sale }}%</span>
+                                    <span>{{ $coupon->display_value }}</span>
                                 </li>
                             @empty
                                 <li class="list-group-item text-center text-muted-light">@lang('Chưa có dữ liệu')</li>
@@ -689,7 +632,6 @@
         $orderStatusChartData = [
             'pending' => $orderStatus['pending'] ?? 0,
             'processing' => $orderStatus['processing'] ?? 0,
-            'shipping' => $orderStatus['shipping'] ?? 0,
             'completed' => $orderStatus['completed'] ?? 0,
             'cancelled' => $orderStatus['cancelled'] ?? 0,
         ];
@@ -707,7 +649,6 @@
                         data: [
                             statusData.pending,
                             statusData.processing,
-                            statusData.shipping,
                             statusData.completed,
                             statusData.cancelled
                         ],
