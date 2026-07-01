@@ -31,7 +31,7 @@
                 <select name="{{ $attr->id }}" class="form-control">
                     @foreach (explode(';', $attr->value) as $value)
                         <option value="{{ $value }}"
-                            {{ isset($product) ? (checkDataAttributeValue($attr, $product, $value) ? 'selected' : '') : '' }}>
+                            {{ isset($product) ? (checkDataAttributeValue($attr, $product, trim($value)) ? 'selected' : '') : '' }}>
                             {{ $value }}
                         </option>
                     @endforeach
